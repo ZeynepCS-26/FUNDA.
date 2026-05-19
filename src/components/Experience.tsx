@@ -47,16 +47,16 @@ export const Experience = () => {
   })();
 
   return (
-    <section className="py-24 px-12 bg-pumice/30">
-      <h2 className="text-4xl font-medium tracking-tight mb-16">Experience & Leadership</h2>
-      <div className="space-y-12">
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 bg-[#bfbcbc] dark:bg-[#bfbcbc] text-charcoal dark:text-charcoal">
+      <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 md:mb-16">Experience & Leadership</h2>
+      <div className="space-y-8 md:space-y-12">
         {displayData.map((exp, i) => (
-          <div key={i} className="flex gap-8 border-b border-charcoal/20 pb-8">
-            <div className="w-1/3 flex flex-col">
+          <div key={i} className="flex flex-col md:flex-row gap-2 md:gap-8 border-b border-charcoal/20 pb-6 md:pb-8">
+            <div className="w-full md:w-1/3 flex flex-col">
               <span className="font-semibold text-charcoal">{exp.role}</span>
               <span className="text-sm font-mono text-clay">{exp.organization}</span>
             </div>
-            <p className="w-2/3 text-charcoal/80 leading-relaxed max-w-xl">{exp.description}</p>
+            <p className="w-full md:w-2/3 text-charcoal/80 leading-relaxed max-w-xl">{exp.description}</p>
           </div>
         ))}
       </div>

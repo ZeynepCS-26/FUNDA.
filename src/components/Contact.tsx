@@ -33,9 +33,9 @@ export const Contact = () => {
   };
 
   return (
-    <section className="py-24 px-12" id="contact">
-      <h2 className="text-4xl font-medium tracking-tight mb-16">LET'S BUILD SOMETHING</h2>
-      <form onSubmit={handleSubmit} className="max-w-2xl space-y-8">
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12" id="contact">
+      <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-8 md:mb-16">LET'S BUILD SOMETHING</h2>
+      <form onSubmit={handleSubmit} className="max-w-2xl space-y-6 md:space-y-8">
         <div>
           <label className="block text-sm font-mono mb-2">EMAIL</label>
           <input 

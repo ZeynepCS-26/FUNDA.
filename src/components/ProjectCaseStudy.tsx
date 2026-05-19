@@ -59,15 +59,15 @@ export const ProjectCaseStudy = () => {
     };
 
     return (
-        <div className="space-y-12">
+        <div className="space-y-4 md:space-y-12">
             {displayData.map((project, index) => (
-                <section key={index} className="py-24 px-12 bg-charcoal text-alabaster min-h-screen flex items-center">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <section key={index} className="py-12 md:py-24 px-4 sm:px-6 md:px-12 bg-charcoal text-alabaster min-h-screen flex items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
                         <div>
-                            <span className="text-sage font-mono text-sm mb-4 block">0{index + 1} / Featured Case Study</span>
-                            <h2 className="text-7xl font-medium tracking-tight mb-8">{project.title}</h2>
-                            <h3 className="text-3xl font-light text-alabaster/70 mb-12">{project.description.split('.')[0]}</h3>
-                            <p className="text-lg text-alabaster/60 leading-relaxed max-w-lg mb-8">{project.description}</p>
+                            <span className="text-sage font-mono text-xs md:text-sm mb-2 md:mb-4 block">0{index + 1} / Featured Case Study</span>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-medium tracking-tight mb-4 md:mb-8">{project.title}</h2>
+                            <h3 className="text-lg sm:text-xl md:text-3xl font-light text-alabaster/70 mb-6 md:mb-12">{project.description.split('.')[0]}</h3>
+                            <p className="text-sm sm:text-base md:text-lg text-alabaster/60 leading-relaxed max-w-lg mb-6 md:mb-8">{project.description}</p>
                             <button 
                                 onClick={() => handleViewCaseStudy(project.title)}
                                 className={
@@ -79,7 +79,7 @@ export const ProjectCaseStudy = () => {
                                 {(project.title.toLowerCase().includes("escape game") || project.title.toLowerCase().includes("eclipse") || project.title.toLowerCase().includes("test me dream")) ? "View Case Study" : "Coming Soon"}
                             </button>
                         </div>
-                        <div className="bg-charcoal/50 border border-alabaster/10 h-96 flex items-center justify-center rounded-sm overflow-hidden">
+                        <div className="bg-charcoal/50 border border-alabaster/10 h-48 sm:h-64 md:h-96 flex items-center justify-center rounded-sm overflow-hidden mt-6 md:mt-0">
                             <img 
                                 src={
                                     (project.title.toLowerCase().includes("teamlink")) ? "https://lh3.googleusercontent.com/d/1v1fKt7Jm3dcOkZeNeqGYeLamHNjYA6N_" :

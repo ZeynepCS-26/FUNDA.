@@ -1,7 +1,7 @@
 import { PORTFOLIO_CONTENT } from "../data/content";
 
 export const Testimonials = () => (
-  <section className="py-24 px-12">
+  <section className="py-24 px-6 md:px-12">
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
       {PORTFOLIO_CONTENT.testimonials.map((t, i) => (
         <div key={i} className="bg-white dark:bg-white/5 p-8 rounded-sm dark:border dark:border-alabaster/10">

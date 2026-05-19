@@ -17,9 +17,9 @@ export const WhoAmI = () => {
   }, []);
 
   return (
-    <section className="py-24 px-12" id="about">
-      <h2 className="text-4xl font-medium tracking-tight mb-8">Who Am I</h2>
-      <p className="text-xl text-charcoal/80 dark:text-alabaster/80 leading-relaxed max-w-2xl">
+    <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12" id="about">
+      <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6 md:mb-8">Who Am I</h2>
+      <p className="text-base sm:text-lg md:text-xl text-charcoal/80 dark:text-alabaster/80 leading-relaxed max-w-2xl">
         {content}
       </p>
     </section>
