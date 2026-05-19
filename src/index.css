@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-alabaster: #F5F2EF;
+  --color-pumice: #D1D3D0;
+  --color-charcoal: #1A1A1A;
+  --color-clay: #B38676;
+  --color-sage: #8A9A8B;
+  
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Berkeley Mono", monospace;
+}
+
+body {
+  @apply bg-alabaster text-charcoal font-sans transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-charcoal text-alabaster;
+}

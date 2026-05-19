@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Config": {
+      "title": "Global Configuration",
+      "description": "Global settings for the portfolio.",
+      "type": "object",
+      "properties": {
+        "resumeUrl": { "type": "string" }
+      },
+      "required": ["resumeUrl"]
+    },
+    "Project": {
+      "title": "Project",
+      "description": "Portfolio case studies and projects.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "role": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "description", "role", "isActive"]
+    },
+    "About": {
+      "title": "About Info",
+      "description": "Who Am I text content.",
+      "type": "object",
+      "properties": {
+        "content": { "type": "string" }
+      },
+      "required": ["content"]
+    },
+    "Experience": {
+      "title": "Experience",
+      "description": "Experience and leadership roles.",
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "organization": { "type": "string" },
+        "description": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["role", "organization", "description"]
+    }
+  },
+  "firestore": {
+    "/config/global": {
+      "schema": "Config",
+      "description": "Global config document containing resume link"
+    },
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "List of projects"
+    },
+    "/about/whoami": {
+      "schema": "About",
+      "description": "Who I am content"
+    },
+    "/experience/{experienceId}": {
+      "schema": "Experience",
+      "description": "List of experiences"
+    },
+    "/admins/{userId}": {
+      "schema": {
+        "title": "Admin",
+        "type": "object",
+        "properties": { "role": { "type": "string" } }
+      },
+      "description": "List of admin users"
+    }
+  }
+}

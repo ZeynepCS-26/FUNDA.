@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || request.auth.token.email == 'fzsarkisla@gmail.com'); }
+
+    function isValidConfig(data) {
+      return data.keys().hasAll(['resumeUrl']) 
+        && data.resumeUrl is string && data.resumeUrl.size() <= 500;
+    }
+
+    function isValidProject(data) {
+      return data.keys().hasAll(['title', 'description', 'role', 'isActive'])
+        && data.title is string && data.title.size() <= 200
+        && data.description is string && data.description.size() <= 5000
+        && data.role is string && data.role.size() <= 100
+        && data.isActive is bool
+        && (data.get('imageUrl', '') is string || data.get('imageUrl', null) == null)
+        && (data.get('order', 0) is number);
+    }
+
+    function isValidAbout(data) {
+      return data.keys().hasAll(['content'])
+        && data.content is string && data.content.size() <= 5000;
+    }
+
+    function isValidExperience(data) {
+      return data.keys().hasAll(['role', 'organization', 'description'])
+        && data.role is string && data.role.size() <= 200
+        && data.organization is string && data.organization.size() <= 200
+        && data.description is string && data.description.size() <= 5000
+        && (data.get('order', 0) is number);
+    }
+
+    match /admins/{userId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /config/global {
+      allow read: if true;
+      allow create: if isAdmin() && isValidConfig(incoming()) && incoming().keys().size() <= 2;
+      allow update: if isAdmin() && isValidConfig(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['resumeUrl']);
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow delete: if isAdmin() && isValidId(projectId);
+      allow create: if isAdmin() && isValidId(projectId) && isValidProject(incoming()) && incoming().keys().size() <= 6;
+      allow update: if isAdmin() && isValidId(projectId) && isValidProject(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['title', 'description', 'role', 'isActive', 'imageUrl', 'order']);
+    }
+
+    match /about/whoami {
+      allow read: if true;
+      allow create: if isAdmin() && isValidAbout(incoming()) && incoming().keys().size() <= 1;
+      allow update: if isAdmin() && isValidAbout(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['content']);
+    }
+
+    match /experience/{experienceId} {
+      allow read: if true;
+      allow delete: if isAdmin() && isValidId(experienceId);
+      allow create: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming()) && incoming().keys().size() <= 4;
+      allow update: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['role', 'organization', 'description', 'order']);
+    }
+  }
+}
