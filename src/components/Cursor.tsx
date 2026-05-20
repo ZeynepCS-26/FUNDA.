@@ -7,8 +7,19 @@ export const Cursor = () => {
   const [isHovered, setIsHovered] = useState(false);
   const darkMode = useStore((state) => state.darkMode);
   const [isOverProject, setIsOverProject] = useState(false);
+  const [isPointerFine, setIsPointerFine] = useState(true);
 
   useEffect(() => {
+    // Check if the device has a fine pointer (like a mouse). Touch screens typically have 'coarse'.
+    const mediaQuery = window.matchMedia('(pointer: fine)');
+    setIsPointerFine(mediaQuery.matches);
+    
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsPointerFine(e.matches);
+    };
+    
+    mediaQuery.addEventListener('change', handleMediaChange);
+
     const handleMouseMove = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
     
     const handleMouseOver = (e: any) => {
@@ -25,11 +36,14 @@ export const Cursor = () => {
     window.addEventListener('mouseout', handleMouseOut);
 
     return () => {
+        mediaQuery.removeEventListener('change', handleMediaChange);
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('mouseover', handleMouseOver);
         window.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
+
+  if (!isPointerFine) return null;
 
   return (
     <motion.div
