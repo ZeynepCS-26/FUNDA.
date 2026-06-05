@@ -43,6 +43,18 @@
         "order": { "type": "number" }
       },
       "required": ["role", "organization", "description"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Contact form submissions.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "topic": { "type": "string" },
+        "createdAt": { "type": "timestamp" },
+        "read": { "type": "boolean" }
+      },
+      "required": ["email", "topic", "createdAt", "read"]
     }
   },
   "firestore": {
@@ -69,6 +81,10 @@
         "properties": { "role": { "type": "string" } }
       },
       "description": "List of admin users"
+    },
+    "/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Contact form messages"
     }
   }
 }

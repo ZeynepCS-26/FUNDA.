@@ -5,6 +5,7 @@ import { db, handleFirestoreError, OperationType } from '../../lib/firebase';
 export const MessagesAdmin = () => {
   const [messages, setMessages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [errorState, setErrorState] = useState<string | null>(null);
 
   useEffect(() => {
     const q = query(collection(db, 'messages'), orderBy('createdAt', 'desc'));
@@ -16,9 +17,12 @@ export const MessagesAdmin = () => {
       }));
       setMessages(msgs);
       setLoading(false);
+      setErrorState(null);
     }, (error) => {
-      console.error(error);
-      handleFirestoreError(error, OperationType.LIST, 'messages');
+      console.error("Firestore Error in MessagesAdmin:", error);
+      // Suppress the error on the UI as requested by the user, showing empty state instead
+      setMessages([]);
+      setErrorState(null);
       setLoading(false);
     });
 
@@ -49,12 +53,14 @@ export const MessagesAdmin = () => {
 
   if (loading) return <div>Loading...</div>;
 
+  if (errorState) return <div className="text-red-500">{errorState}</div>;
+
   return (
     <div>
       <h2 className="text-3xl font-medium tracking-tight mb-8">Messages</h2>
       
       {messages.length === 0 ? (
-        <p className="text-charcoal/60 dark:text-alabaster/60">No messages yet.</p>
+        <p className="text-charcoal/60 dark:text-alabaster/60">No message received.</p>
       ) : (
         <div className="space-y-4">
           {messages.map((msg) => (

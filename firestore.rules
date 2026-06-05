@@ -9,7 +9,7 @@ service cloud.firestore {
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
     function isSignedIn() { return request.auth != null; }
-    function isAdmin() { return isSignedIn() && (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || request.auth.token.email == 'fzsarkisla@gmail.com'); }
+    function isAdmin() { return isSignedIn() && (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || request.auth.token.email == 'fzsarkisla@gmail.com' || request.auth.uid == 'CokiZTUW0OehzCgTUwpU1eS5rvu2'); }
 
     function isValidConfig(data) {
       return data.keys().hasAll(['resumeUrl']) 
@@ -37,6 +37,14 @@ service cloud.firestore {
         && data.organization is string && data.organization.size() <= 200
         && data.description is string && data.description.size() <= 5000
         && (data.get('order', 0) is number);
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['email', 'topic', 'createdAt', 'read'])
+        && data.email is string && data.email.size() <= 150
+        && data.topic is string && data.topic.size() <= 5000
+        && data.createdAt is timestamp
+        && data.read is bool;
     }
 
     match /admins/{userId} {
@@ -68,6 +76,12 @@ service cloud.firestore {
       allow delete: if isAdmin() && isValidId(experienceId);
       allow create: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming()) && incoming().keys().size() <= 4;
       allow update: if isAdmin() && isValidId(experienceId) && isValidExperience(incoming()) && incoming().diff(existing()).affectedKeys().hasOnly(['role', 'organization', 'description', 'order']);
+    }
+
+    match /messages/{messageId} {
+      allow read, delete: if isAdmin();
+      allow create: if isValidMessage(incoming()) && incoming().keys().size() <= 4;
+      allow update: if isAdmin() && incoming().diff(existing()).affectedKeys().hasOnly(['read']);
     }
   }
 }

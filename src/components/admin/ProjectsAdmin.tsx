@@ -54,7 +54,10 @@ export const ProjectsAdmin = () => {
 
       setProjects(data);
       setLoading(false);
-    }, (error) => handleFirestoreError(error, OperationType.LIST, 'projects'));
+    }, (error) => {
+      console.error("Firestore Error:", error);
+      setLoading(false);
+    });
     return () => {
       isMounted = false;
       unsubscribe();
