@@ -1,20 +1,14 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+### 3. Vercel Portfolyo CI/CD Mimari Şeması
 
-# Run and deploy your AI Studio app
+```mermaid
+graph LR
+    A[Yerel Geliştirme<br/>HTML, CSS, JS] -->|Git Push| B( GitHub Reposu)
+    B -->|Tetikleme / CI-CD| C{ Vercel Platformu}
+    C -->|Otomatik Derleme & Optimizasyon| D[ Vercel Edge Network]
+    D -->|Global Dağıtım| E([ Canlı Portfolyo Sitesi])
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/6d142d78-d5c7-417a-9214-a69b57bcf50c
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+    style A fill:#20232a,stroke:#f0db4f,stroke-width:2px,color:#fff
+    style B fill:#20232a,stroke:#ffffff,stroke-width:2px,color:#fff
+    style C fill:#000000,stroke:#ffffff,stroke-width:2px,color:#fff
+    style D fill:#20232a,stroke:#0070f3,stroke-width:2px,color:#fff
+    style E fill:#0070f3,stroke:#ffffff,stroke-width:2px,color:#fff
