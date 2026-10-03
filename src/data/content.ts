@@ -1,11 +1,12 @@
 export const PORTFOLIO_CONTENT = {
   hero: {
-    title: "Designing Ecosystems. Architecting Intelligence. Scaling Solutions.",
-    manifesto: "I specialize in transforming complex data infrastructure into intuitive, high-performance digital products. By bridging rigorous algorithmic foundations with refined user experiences, I deliver scalable software architectures that drive both business value and operational efficiency. I don't just write code; I engineer strategic digital assets where deep logic meets seamless execution.",
+    title: "Defending Infrastructure",
+    manifesto: "I specialize in defensive cybersecurity, systems administration, and infrastructure hardening across Linux, Windows, and macOS ecosystems. Leveraging enterprise Microsoft cloud security technologies including Microsoft Defender for Cloud and Azure Defender, I engineer resilient environments to proactively detect, mitigate, and neutralize critical attack vectors—from distributed Denial of Service (DoS/DDoS) operations to complex intrusion attempts. I don't just monitor security alerts; I architect robust, fortified digital infrastructures where vigilant administration meets decisive defense.",
   },
   techStack: [
-    "C#", ".NET Core", "PostgreSQL", "Docker", "Next.js", 
-    "TypeScript", "Object-Oriented Programming", "Unity 3D", "Python", "C", "Algorithmic Logic"
+    "Defensive Cybersecurity", "Linux Hardening", "Microsoft Defender for Cloud", "Azure Security", 
+    "macOS Administration", "DoS / DDoS Mitigation", "Incident Response", "Threat Analysis", 
+    "Systems Administration", "Docker", "Python", "Algorithmic Logic"
   ],
   process: [
     { title: "01. System Design & UI/UX", desc: "Structuring the core database schemas with SQL and designing intuitive user interfaces before writing the core logic." },

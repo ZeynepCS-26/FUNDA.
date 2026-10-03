@@ -9,7 +9,13 @@ service cloud.firestore {
     function incoming() { return request.resource.data; }
     function existing() { return resource.data; }
     function isSignedIn() { return request.auth != null; }
-    function isAdmin() { return isSignedIn() && (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || request.auth.token.email == 'fzsarkisla@gmail.com' || request.auth.uid == 'CokiZTUW0OehzCgTUwpU1eS5rvu2'); }
+    function isAdmin() { 
+      return isSignedIn() && (
+        (request.auth.token.email == 'fzsarkisla@gmail.com' && request.auth.token.email_verified == true) || 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) || 
+        request.auth.uid == 'CokiZTUW0OehzCgTUwpU1eS5rvu2'
+      ); 
+    }
 
     function isValidConfig(data) {
       return data.keys().hasAll(['resumeUrl']) 

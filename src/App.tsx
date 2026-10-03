@@ -14,8 +14,10 @@ import { Cursor } from './components/Cursor';
 import { Background } from './components/Background';
 import { ProjectCaseStudy } from './components/ProjectCaseStudy';
 import { Contact } from './components/Contact';
+import { SiteRating } from './components/SiteRating';
 import { About } from './components/About';
 import { Footer } from './components/Footer';
+import { AdminQuickBar } from './components/admin/AdminQuickBar';
 import { useStore } from './store/useStore';
 import { AdminLayout } from './components/admin/AdminLayout';
 import { Dashboard } from './components/admin/Dashboard';
@@ -56,7 +58,9 @@ export default function App() {
                     <Process />
                     <Testimonials />
                     <Contact />
+                    <SiteRating />
                     <Footer />
+                    <AdminQuickBar />
                   </main>
                 } />
                 <Route path="/admin" element={<AdminLayout />}>

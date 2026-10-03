@@ -1,11 +1,22 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, isAuthorizedAdmin } from "../lib/firebase";
 import { useStore } from "../store/useStore";
-import { Menu, X, Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun, ShieldCheck } from "lucide-react";
 
 export const Navbar = () => {
   const { darkMode, toggleDarkMode } = useStore();
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAdmin(!!(user && isAuthorizedAdmin(user.email)));
+    });
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +68,16 @@ export const Navbar = () => {
       </div>
       
       {/* Desktop Toolbar */}
-      <div className="hidden md:flex items-center gap-8 text-xs font-mono relative z-10">
+      <div className="hidden md:flex items-center gap-6 text-xs font-mono relative z-10">
+        {isAdmin && (
+          <Link 
+            to="/admin" 
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-clay text-white hover:bg-clay/90 transition-all font-mono text-xs font-semibold shadow-sm"
+          >
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>ADMIN</span>
+          </Link>
+        )}
         {availableForHire}
         {darkModeToggle}
       </div>
@@ -75,6 +95,16 @@ export const Navbar = () => {
         className={`absolute top-full left-0 w-full bg-alabaster dark:bg-charcoal border-b border-charcoal/10 dark:border-alabaster/10 overflow-hidden transition-all duration-300 ease-in-out md:hidden ${isMobileMenuOpen ? 'max-h-96 py-8' : 'max-h-0 py-0 border-transparent'}`}
       >
         <div className="flex flex-col items-center gap-6 text-lg font-medium">
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-clay text-white text-sm font-mono font-semibold"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>ADMIN PANEL</span>
+            </Link>
+          )}
           {['WORK', 'ABOUT', 'PROCESS', 'CONTACT'].map(item => (
             <a 
               key={item} 

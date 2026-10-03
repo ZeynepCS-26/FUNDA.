@@ -4,7 +4,7 @@ import { db } from "../lib/firebase";
 
 export const WhoAmI = () => {
   const [content, setContent] = useState(
-    "I am a Full-Stack System Architect and aspiring Machine Learning Engineer focused on the intersection of deep algorithmic logic and minimalist interactive design. Currently in my 4th year of Computer Science at Dokuz Eylül University and serving as President of the CS-AI Community, I design scalable digital ecosystems. From architecting production-ready data schemas to engineering machine learning solutions, I build stable environments where complex systems operate seamlessly behind effortless interfaces."
+    "I am a Defensive Cybersecurity Specialist and Systems Engineer specializing in Linux, Windows, and macOS enterprise environments. Utilizing technologies such as Microsoft Defender for Cloud and Azure security suites, I engineer hardened system architectures, implement proactive DoS mitigation protocols, and execute robust system administration to safeguard mission-critical infrastructures against evolving cyber threats."
   );
 
   useEffect(() => {

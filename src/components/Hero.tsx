@@ -4,6 +4,7 @@ import { db } from "../lib/firebase";
 import { PORTFOLIO_CONTENT } from "../data/content";
 import { useStore } from "../store/useStore";
 import Balatro from "./Balatro";
+import ParticleText from "./ParticleText";
 
 export const Hero = () => {
   const { soundEnabled, toggleSound, darkMode } = useStore();
@@ -30,10 +31,27 @@ export const Hero = () => {
           color3={darkMode ? "#20232c" : "#f1f4e4"}
         />
       </div>
-      <div className="max-w-4xl z-10">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-medium tracking-tight mb-4 md:mb-6 leading-[1.1]">
-          {PORTFOLIO_CONTENT.hero.title}
-        </h1>
+      <div className="max-w-5xl z-10 w-full">
+        <div style={{ width: '100%', height: 360, background: 'transparent' }} className="relative mb-4 -ml-2 sm:-ml-4">
+          <ParticleText
+            text="Defending Infrastructure"
+            particleSize={1.7}
+            density={2}
+            color={darkMode ? "#ffffff" : "#0d0d0d"}
+            highlightColor={darkMode ? "#8b5cf6" : "#000000"}
+            scatter={150}
+            gatherDuration={1000}
+            stagger={150}
+            pointerRepel={48}
+            repelRadius={80}
+            idleDrift={0.1}
+            trigger="hover"
+            fontSize="clamp(3rem, 12vw, 8rem)"
+            fontWeight={800}
+            fontFamily="inherit"
+            glow
+          />
+        </div>
         <p className="text-base sm:text-lg md:text-xl text-charcoal/80 dark:text-alabaster/80 mb-6 md:mb-8 max-w-2xl leading-relaxed">
           {PORTFOLIO_CONTENT.hero.manifesto}
         </p>
