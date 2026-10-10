@@ -87,10 +87,19 @@ const waitForFonts = async (font: string): Promise<void> => {
   if (!('fonts' in document)) return;
 
   try {
-    await document.fonts.load(font);
+    if (document.fonts.check(font)) return;
+    await Promise.race([
+      document.fonts.load(font),
+      new Promise((r) => setTimeout(r, 80))
+    ]);
   } catch {}
 
-  await document.fonts.ready;
+  try {
+    await Promise.race([
+      document.fonts.ready,
+      new Promise((r) => setTimeout(r, 80))
+    ]);
+  } catch {}
 };
 
 export const ParticleText: React.FC<ParticleTextProps> = ({
@@ -287,34 +296,26 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       const maxTextWidth = width * 0.92;
       offCtx.font = font;
       let metrics = offCtx.measureText(content);
-      const measuredWidth = Math.max(1, metrics.width);
+      let measuredWidth = Math.max(1, metrics.width);
 
       if (measuredWidth > maxTextWidth) {
-        resolvedSize = Math.max(18, resolvedSize * (maxTextWidth / measuredWidth));
+        resolvedSize = Math.max(16, resolvedSize * (maxTextWidth / measuredWidth));
         font = `${fontWeight} ${resolvedSize}px ${resolvedFamily}`;
-        await waitForFonts(font);
-        if (currentBuild !== buildId) return;
         offCtx.font = font;
-        metrics = offCtx.measureText(content);
+        measuredWidth = Math.max(1, offCtx.measureText(content).width);
       }
 
-      const left = Math.ceil(metrics.actualBoundingBoxLeft || 0);
-      const right = Math.ceil(metrics.actualBoundingBoxRight || metrics.width);
-      const ascent = Math.ceil(metrics.actualBoundingBoxAscent || resolvedSize * 0.78);
-      const descent = Math.ceil(metrics.actualBoundingBoxDescent || resolvedSize * 0.22);
-      const padding = Math.max(12, Math.ceil(resolvedSize * 0.08));
-      const textWidth = Math.max(1, left + right);
-      const textHeight = Math.max(1, ascent + descent);
-
-      offscreen.width = textWidth + padding * 2;
-      offscreen.height = textHeight + padding * 2;
+      const paddingX = Math.max(16, Math.ceil(resolvedSize * 0.15));
+      const paddingY = Math.max(16, Math.ceil(resolvedSize * 0.15));
+      offscreen.width = Math.max(1, Math.ceil(measuredWidth + paddingX * 2));
+      offscreen.height = Math.max(1, Math.ceil(resolvedSize * 1.4 + paddingY * 2));
 
       offCtx.clearRect(0, 0, offscreen.width, offscreen.height);
       offCtx.font = font;
-      offCtx.textAlign = 'left';
-      offCtx.textBaseline = 'alphabetic';
+      offCtx.textAlign = 'center';
+      offCtx.textBaseline = 'middle';
       offCtx.fillStyle = '#ffffff';
-      offCtx.fillText(content, padding - left, padding + ascent);
+      offCtx.fillText(content, offscreen.width / 2, offscreen.height / 2);
 
       const imageData = offCtx.getImageData(0, 0, offscreen.width, offscreen.height);
       const targets: Target[] = [];
@@ -323,7 +324,7 @@ export const ParticleText: React.FC<ParticleTextProps> = ({
       for (let y = 0; y < offscreen.height; y += step) {
         for (let x = 0; x < offscreen.width; x += step) {
           const alpha = imageData.data[(y * offscreen.width + x) * 4 + 3];
-          if (alpha > 40) {
+          if (alpha > 30) {
             targets.push({
               x: width / 2 - offscreen.width / 2 + x,
               y: height / 2 - offscreen.height / 2 + y,

@@ -32,13 +32,13 @@ export const Hero = () => {
         />
       </div>
       <div className="max-w-5xl z-10 w-full">
-        <div style={{ width: '100%', height: 360, background: 'transparent' }} className="relative mb-4 -ml-2 sm:-ml-4">
+        <div style={{ width: '100%', height: 300, background: 'transparent' }} className="relative mb-3 -ml-2 sm:-ml-4">
           <ParticleText
             text="Defending Infrastructure"
-            particleSize={1.7}
+            particleSize={2.0}
             density={2}
-            color={darkMode ? "#ffffff" : "#0d0d0d"}
-            highlightColor={darkMode ? "#8b5cf6" : "#000000"}
+            color={darkMode ? "#ffffff" : "#1A1A1A"}
+            highlightColor={darkMode ? "#a78bfa" : "#3c2c2b"}
             scatter={150}
             gatherDuration={1000}
             stagger={150}
@@ -46,7 +46,7 @@ export const Hero = () => {
             repelRadius={80}
             idleDrift={0.1}
             trigger="hover"
-            fontSize="clamp(3rem, 12vw, 8rem)"
+            fontSize="clamp(2.5rem, 8vw, 6rem)"
             fontWeight={800}
             fontFamily="inherit"
             glow
